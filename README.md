@@ -28,7 +28,7 @@ log.debug('debug ...');
 stdout
 ------
 ```console
-λ node example\example1.js
+$ node example\example1.js
 11:08:28.480 |   myProcessName - info:  info ! { foo: 'bar' }
 11:08:28.482 |   myProcessName - warn:  warn !!
 11:08:28.483 |   myProcessName - error: Error: huhu
