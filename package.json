@@ -1,0 +1,25 @@
+{
+  "name": "evillogger",
+  "version": "0.9.0",
+  "description": "simple nodejs winston based logger",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-eviltik:eviltik/evillogger"
+  },
+  "keywords": [
+    "logger",
+    "winston",
+    "cli"
+  ],
+  "author": "eviltik",
+  "license": "MIT",
+  "dependencies": {
+    "minimist": "1.2.0",
+    "sprintf": "0.1.5",
+    "winston": "2.4.0"
+  }
+}

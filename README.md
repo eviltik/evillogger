@@ -25,8 +25,8 @@ log.error(new Error('huhu'));
 log.debug('debug ...');
 ```
 
-stdout
-------
+Output (stdout)
+---------------
 ```console
 $ node example\example1.js
 11:08:28.480 |   myProcessName - info:  info ! { foo: 'bar' }
