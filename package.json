@@ -1,6 +1,6 @@
 {
   "name": "evillogger",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "simple nodejs winston based logger",
   "main": "index.js",
   "scripts": {
