@@ -88,7 +88,7 @@ class EvilLogger {
         }
 
         if (this.lastMessageRepeat < 5) {
-            return fnc(message);
+            return fnc(this.message);
         }
     }
 
