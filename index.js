@@ -43,7 +43,11 @@ class EvilLogger {
 
                 let date = h + ':' + m + ':' + s + '.' + mm;
                 let ms = ' | ' + sprintf('%'+this.spaces+'s', (this.ns));
-                if (cluster.forkNumber) ms+='#'+cluster.forkNumber;
+                if (cluster.forkNumber) {
+                    ms+='#'+cluster.forkNumber;
+                } else {
+                    ms+='#0';
+                }
                 return date + ms;
             }
         };
@@ -78,7 +82,7 @@ class EvilLogger {
         if (!cluster.forkNumber) return fnc(what);
 
         setTimeout(() => {
-            fnc(what, fnc);
+            fnc(what);
         },cluster.forkNumber*4);
 
     }
