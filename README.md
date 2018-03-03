@@ -1,7 +1,7 @@
 # evillogger
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
-nodejs winston based logger
+nodejs logger for daemons. evilcluster compatible.
 
 
 Installation
@@ -14,7 +14,9 @@ $ npm install evillogger
 Usage
 -----
 ```js
-var log = require('evilloger')('myProcessName');
+const log = require('evilloger')('myProcessName');
+// or
+//const log = require('evilloger')();
 
 log.info('info !',{foo:'bar'});
 log.warn('warn !!');
@@ -29,9 +31,9 @@ Output (stdout)
 ---------------
 ```console
 $ node example\example1.js
-11:08:28.480 |   myProcessName - info:  info ! { foo: 'bar' }
-11:08:28.482 |   myProcessName - warn:  warn !!
-11:08:28.483 |   myProcessName - error: Error: huhu
+11:50:45.952  0 | myProcessName        | info:  info ! { foo: 'bar' }
+11:50:45.952  0 | myProcessName        | warn:  warn !!
+11:50:45.952  0 | myProcessName        | error: Error: huhu
     at Object.<anonymous> (D:\git\evillogger\example\example1.js:5:11)
     at Module._compile (module.js:635:30)
     at Object.Module._extensions..js (module.js:646:10)
