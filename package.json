@@ -18,8 +18,8 @@
   "author": "eviltik",
   "license": "MIT",
   "dependencies": {
+    "colors": "1.1.2",
     "minimist": "1.2.0",
-    "sprintf": "0.1.5",
-    "winston": "2.4.0"
+    "sprintf": "0.1.5"
   }
 }
