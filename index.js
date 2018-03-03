@@ -2,6 +2,7 @@ const winston = require('winston');
 const util = require('util');
 const fs = require('fs');
 const sprintf = require('sprintf').sprintf;
+const cluster = require('cluster');
 
 class EvilLogger {
 
@@ -14,7 +15,11 @@ class EvilLogger {
         }
 
         this.ns = options.ns || 'master';
-        this.spaces = options.spaces || 15;
+        this.spaces = options.spaces || 20;
+        this.colorize = true;
+        if (typeof options.colorize === 'boolean') {
+             this.colorize = options.colorize;
+        }
 
         this.allowedMessageCount = [5,10, 100, 500, 1000, 5000, 10000, 50000];
         this.lastMessage = '';
@@ -25,7 +30,7 @@ class EvilLogger {
 
         let opts = {
             json: false,
-            colorize: true,
+            colorize: this.colorize,
             timestamp: () => {
                 let d = new Date();
                 let h = (d.getHours() < 10 ? "0" : "") + d.getHours();
@@ -38,6 +43,7 @@ class EvilLogger {
 
                 let date = h + ':' + m + ':' + s + '.' + mm;
                 let ms = ' | ' + sprintf('%'+this.spaces+'s', (this.ns));
+                if (cluster.forkNumber) ms+='#'+cluster.forkNumber;
                 return date + ms;
             }
         };
@@ -68,27 +74,36 @@ class EvilLogger {
         this.handleLastMessage(arguments, this.winstonLogger.debug);
     }
 
+    logme(what, fnc) {
+        if (!cluster.forkNumber) return fnc(what);
+
+        setTimeout(() => {
+            fnc(what, fnc);
+        },cluster.forkNumber*4);
+
+    }
+
     handleLastMessage(args, fnc) {
         this.message = util.format.apply(this, args);
 
         if (this.message != this.lastMessage) {
             this.lastMessage = this.message;
             this.lastMessageRepeat = 0;
-            return fnc(this.message);
+            return this.logme(this.message, fnc);
         }
 
         this.lastMessageRepeat++;
 
         if (this.lastMessageRepeat > this.allowedMessageCount[this.allowedMessageCount.length]) {
-            return fnc(' last message repeated more than '+ this.allowedMessageCount[this.allowedMessageCount.length]+' times: '+this.allowedMessageCount[this.allowedMessageCount.length]);
+            return this.logme(' last message repeated more than '+ this.allowedMessageCount[this.allowedMessageCount.length]+' times: '+this.allowedMessageCount[this.allowedMessageCount.length], fnc);
         }
 
         if (this.allowedMessageCount.indexOf(this.lastMessageRepeat)>=0) {
-            return fnc(' last message repeated '+this.lastMessageRepeat+' times: '+this.lastMessage);
+            return this.logme(' last message repeated '+this.lastMessageRepeat+' times: '+this.lastMessage, fnc);
         }
 
         if (this.lastMessageRepeat < 5) {
-            return fnc(this.message);
+            return this.logme(this.message, fnc);
         }
     }
 
