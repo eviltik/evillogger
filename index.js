@@ -92,7 +92,14 @@ class EvilLogger {
     }
 
     logme(msg, level) {
-        return console.log(this._prefix(level, msg));
+        if (!cluster.forkNumber) {
+            return console.log(this._prefix(level, msg));
+        }
+
+        // avoid multiple messages on the same line
+        setTimeout(() => {
+             console.log(this._prefix(level, msg));
+        },cluster.forkNumber*4);
     }
 
     _handleLastMessage(args, level) {
