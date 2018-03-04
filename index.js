@@ -92,12 +92,7 @@ class EvilLogger {
     }
 
     logme(msg, level) {
-        if (!cluster.forkNumber) return console.log(this._prefix(level, msg));
-
-        setTimeout(() => {
-            console.log(this._prefix(level, msg));
-        },cluster.forkNumber*4);
-
+        return console.log(this._prefix(level, msg));
     }
 
     _handleLastMessage(args, level) {
