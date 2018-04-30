@@ -1,6 +1,6 @@
 {
   "name": "evillogger",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "simple nodejs winston based logger",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "author": "eviltik",
   "license": "MIT",
   "dependencies": {
-    "colors": "1.1.2",
+    "colors": "1.2.1",
     "minimist": "1.2.0",
     "sprintf": "0.1.5"
   }
