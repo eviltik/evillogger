@@ -20,7 +20,7 @@ class EvilLogger {
             this.ns = options.ns || 'root';
         }
 
-        this.spaces = options.spaces || 20;
+        this.spaces = options.spaces || 30;
         this.colorize = true;
         if (typeof options.colorize === 'boolean') {
              this.colorize = options.colorize;
