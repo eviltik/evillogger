@@ -1,6 +1,6 @@
 {
   "name": "evillogger",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "simple nodejs winston based logger",
   "main": "index.js",
   "scripts": {
@@ -20,6 +20,6 @@
   "dependencies": {
     "colors": "1.2.1",
     "minimist": "1.2.0",
-    "sprintf": "0.1.5"
+    "sprintf-js": "1.1.1"
   }
 }

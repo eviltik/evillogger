@@ -1,6 +1,6 @@
 const util = require('util');
 const fs = require('fs');
-const sprintf = require('sprintf').sprintf;
+const sprintf = require('sprintf-js').sprintf;
 const cluster = require('cluster');
 const colors = require('colors/safe');
 
