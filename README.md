@@ -14,9 +14,15 @@ $ npm install evillogger
 Usage
 -----
 ```js
-const log = require('evilloger')('myProcessName');
+const log = require('evillogger')('myProcessName');
 // or
-//const log = require('evilloger')();
+//const log = require('evillogger')();
+// or
+//const log = require('evillogger')(options)
+// spaces: number of spaces around namespace, default 30
+// repl: add \r before any output, default false
+// colorize: color or not color, default true
+
 
 log.info('info !',{foo:'bar'});
 log.warn('warn !!');

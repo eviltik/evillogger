@@ -26,6 +26,11 @@ class EvilLogger {
              this.colorize = options.colorize;
         }
 
+        this.repl = false;
+        if (typeof options.repl === 'boolean') {
+          this.repl = options.repl;
+        }
+
         this.allowedMessageCount = [5,10, 100, 500, 1000, 5000, 10000, 50000];
         this.lastMessage = '';
         this.lastMessageRepeat = 0;
@@ -68,7 +73,11 @@ class EvilLogger {
         str+=(d.getSeconds() < 10 ? "0" : "") + d.getSeconds()+'.';
         str+=mm;
 
-        str+=sprintf(' %2s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||0, this.ns, level);
+        if (this.repl) {
+          str+=sprintf('\r %2s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||0, this.ns, level);
+        } else {
+          str+=sprintf(' %2s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||0, this.ns, level);
+        }
 
         str+=msg;
 
