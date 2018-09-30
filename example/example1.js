@@ -1,4 +1,4 @@
-var log = require('../')('myProcessName');
+var log = require('../')({ns:'myProcessName',repl:true, spaces:50});
 
 log.info('info !',{foo:'bar'});
 log.warn('warn !!');

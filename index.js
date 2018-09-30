@@ -68,16 +68,13 @@ class EvilLogger {
         if (mm < 100) mm = '0' + mm;
 
         let str = '';
-        str =(d.getHours() < 10 ? "0" : "") + d.getHours()+':';
+        if (this.repl) str = '\r';
+        str+=(d.getHours() < 10 ? "0" : "") + d.getHours()+':';
         str+=(d.getMinutes() < 10 ? "0" : "") + d.getMinutes()+':';
         str+=(d.getSeconds() < 10 ? "0" : "") + d.getSeconds()+'.';
         str+=mm;
 
-        if (this.repl) {
-          str+=sprintf('\r %2s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||0, this.ns, level);
-        } else {
-          str+=sprintf(' %2s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||0, this.ns, level);
-        }
+        str+=sprintf(' %2s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||0, this.ns, level);
 
         str+=msg;
 
