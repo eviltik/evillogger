@@ -38,6 +38,10 @@ class EvilLogger {
 
         let argz = require('minimist')(process.argv.slice(2));
 
+        if (typeof options.file === 'string') {
+            this.file = fs.createWriteStream(options.file);
+        }
+
         if (argz.debug || process.env.DEBUG) {
             // do not use () => {} syntax here, arguments will be empty
             this.debug = function() {
@@ -99,12 +103,21 @@ class EvilLogger {
 
     logme(msg, level) {
         if (!cluster.forkNumber) {
-            return console.log(this._prefix(level, msg));
+            if (this.file) {
+              this.file.write(this._prefix(level, msg)+'\n');
+            } else {
+              console.log(this._prefix(level, msg));
+            }
+            return;
         }
 
         // avoid multiple messages on the same line
         setTimeout(() => {
-             console.log(this._prefix(level, msg));
+            if (this.file) {
+              this.file.write(this._prefix(level, msg)+'\n');
+            } else {
+              console.log(this._prefix(level, msg));
+            }
         },cluster.forkNumber*4);
     }
 

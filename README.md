@@ -22,6 +22,7 @@ const log = require('evillogger')('myProcessName');
 // spaces: number of spaces around namespace, default 30
 // repl: add \r before any output, default false
 // colorize: color or not color, default true
+// file: output to file
 
 
 log.info('info !',{foo:'bar'});
