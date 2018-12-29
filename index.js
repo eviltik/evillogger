@@ -15,7 +15,7 @@ class EvilLogger {
         }
 
         if (cluster.cid && !options.ns) {
-            this.ns = cluster.cid;
+            this.ns = cluster.cid || process.env.NODE_APP_INSTANCE;
         } else {
             this.ns = options.ns || 'root';
         }
