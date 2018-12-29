@@ -78,7 +78,7 @@ class EvilLogger {
         str+=(d.getSeconds() < 10 ? "0" : "") + d.getSeconds()+'.';
         str+=mm;
 
-        str+=sprintf(' %2s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||0, this.ns, level);
+        str+=sprintf(' %2s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||process.env.NODE_APP_INSTANCE||0, this.ns, level);
 
         str+=msg;
 
