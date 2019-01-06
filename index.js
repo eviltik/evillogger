@@ -51,6 +51,17 @@ class EvilLogger {
             this.debug = () => {};
         }
 
+        try {
+            if (JSON.parse(process.env.npm_config_argv).original[0] === "test") {
+                // we are under yarn test or npm test, ignore logs
+                this.debug = () => {};
+                this.info = () => {};
+                this.warn = () => {};
+            }
+        } catch(e) {
+
+        }
+
         if (argz.nocolor) {
             this.colorize = false;
         }
