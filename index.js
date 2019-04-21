@@ -3,10 +3,13 @@ const fs = require('fs');
 const sprintf = require('sprintf-js').sprintf;
 const cluster = require('cluster');
 const colors = require('colors/safe');
+const redis = require('./redis');
 
 class EvilLogger {
 
     constructor(options) {
+
+        this.redisClient = null;
 
         if (typeof options === 'string' || !options) {
             options = {
@@ -89,7 +92,16 @@ class EvilLogger {
         str+=(d.getSeconds() < 10 ? "0" : "") + d.getSeconds()+'.';
         str+=mm;
 
-        str+=sprintf(' %2s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||process.env.NODE_APP_INSTANCE||0, this.ns, level);
+        str+=sprintf(' %2s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||process.env.NODE_APP_INSTANCE||process.pid, this.ns, level);
+
+        if (this.redisClient) {
+            this.redisClient.publish({
+                pid:process.pid,
+                ns:this.ns,
+                l:level,
+                m:msg
+            });
+        }
 
         str+=msg;
 
@@ -129,7 +141,7 @@ class EvilLogger {
             } else {
               console.log(this._prefix(level, msg));
             }
-        },cluster.forkNumber*4);
+        }, cluster.forkNumber*4);
     }
 
     _handleLastMessage(args, level) {
@@ -158,6 +170,12 @@ class EvilLogger {
 
 }
 
-module.exports = function(ns) {
-    return new (EvilLogger)(ns);
+module.exports = function(options) {
+    const logger = new (EvilLogger)(options);
+    if (options && options.redis) {
+        redis.connect(logger, options.redis);
+    } else {
+        console.log('noredisclient');
+    }
+    return logger;
 };
