@@ -9,7 +9,7 @@ function connect(logger, config, callback) {
 
     logger.redisClient = {
         publish:(obj) => {
-            if (isReady && client)
+            if (isReady && client) {
                 client.publish(config.pubsub.logger, JSON.stringify(obj));
             }
         }
