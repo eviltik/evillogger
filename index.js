@@ -174,8 +174,6 @@ module.exports = function(options) {
     const logger = new (EvilLogger)(options);
     if (options && options.redis) {
         redis.connect(logger, options.redis);
-    } else {
-        console.log('noredisclient');
     }
     return logger;
 };

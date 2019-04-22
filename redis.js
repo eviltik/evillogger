@@ -8,7 +8,11 @@ function connect(logger, config, callback) {
 
     logger.redisClient = {
         publish:(obj) => {
-            client && client.publish(config.pubsub.logger, JSON.stringify(obj));
+            try {
+                client && client.publish(config.pubsub.logger, JSON.stringify(obj));
+            } catch(e) {
+                
+            }
         }
     }
 
