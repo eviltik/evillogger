@@ -3,15 +3,14 @@ const Redis = require('ioredis');
 let client;
 let lastError;
 let firstConnect = true;
+let isReady = false;
 
 function connect(logger, config, callback) {
 
     logger.redisClient = {
         publish:(obj) => {
-            try {
-                client && client.publish(config.pubsub.logger, JSON.stringify(obj));
-            } catch(e) {
-                
+            if (isReady && client)
+                client.publish(config.pubsub.logger, JSON.stringify(obj));
             }
         }
     }
@@ -41,11 +40,18 @@ function connect(logger, config, callback) {
     });
 
     client.on('close', () => {
+        console.warn('logger: redis connection closed');
+        isReady = false;
+    });
+
+    client.on('disconnect', () => {
         console.warn('logger: redis disconnected');
+        isReady = false;
     });
 
     client.on('connect', () => {
         lastError = null;
+        isReady = true;
         if (firstConnect) {
             firstConnect = false;
         } else {
@@ -54,6 +60,7 @@ function connect(logger, config, callback) {
     });
 
     client.on('ready', () => {
+        isReady = true;
         callback && callback();
     });
 
