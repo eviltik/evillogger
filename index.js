@@ -4,6 +4,7 @@ const sprintf = require('sprintf-js').sprintf;
 const cluster = require('cluster');
 const colors = require('colors/safe');
 const redis = require('./redis');
+const merge = require('merge');
 
 class EvilLogger {
 
@@ -14,8 +15,10 @@ class EvilLogger {
         if (typeof options === 'string' || !options) {
             options = {
                 ns:options
-            }
+            };
         }
+
+        this.options = options;
 
         if (cluster.cid && !options.ns) {
             this.ns = cluster.cid || process.env.NODE_APP_INSTANCE;
@@ -26,20 +29,20 @@ class EvilLogger {
         this.spaces = options.spaces || 30;
         this.colorize = true;
         if (typeof options.colorize === 'boolean') {
-             this.colorize = options.colorize;
+            this.colorize = options.colorize;
         }
 
         this.repl = false;
         if (typeof options.repl === 'boolean') {
-          this.repl = options.repl;
+            this.repl = options.repl;
         }
 
-        this.allowedMessageCount = [5,10, 100, 500, 1000, 5000, 10000, 50000];
+        this.allowedMessageCount = [5, 10, 100, 500, 1000, 5000, 10000, 50000];
         this.lastMessage = '';
         this.lastMessageRepeat = 0;
         this.message = '';
 
-        let argz = require('minimist')(process.argv.slice(2));
+        const argz = require('minimist')(process.argv.slice(2));
 
         if (typeof options.file === 'string') {
             this.file = fs.createWriteStream(options.file);
@@ -49,13 +52,13 @@ class EvilLogger {
             // do not use () => {} syntax here, arguments will be empty
             this.debug = function() {
                 this._handleLastMessage(arguments, 'debug');
-            }
+            };
         } else {
             this.debug = () => {};
         }
 
         try {
-            if (JSON.parse(process.env.npm_config_argv).original[0] === "test") {
+            if (JSON.parse(process.env.npm_config_argv).original[0] === 'test') {
                 // we are under yarn test or npm test, ignore logs
                 this.debug = () => {};
                 this.info = () => {};
@@ -63,7 +66,7 @@ class EvilLogger {
             }
         } catch(e) {
 
-        }
+        };
 
         if (argz.nocolor) {
             this.colorize = false;
@@ -74,12 +77,12 @@ class EvilLogger {
             error:'red',
             warn:'yellow',
             debug:'gray'
-        }
+        };
 
     }
 
     _prefix(level, msg) {
-        let d = new Date();
+        const d = new Date();
 
         let mm = d.getMilliseconds();
         if (mm < 10) mm = '0' + mm;
@@ -87,20 +90,25 @@ class EvilLogger {
 
         let str = '';
         if (this.repl) str = '\r';
-        str+=(d.getHours() < 10 ? "0" : "") + d.getHours()+':';
-        str+=(d.getMinutes() < 10 ? "0" : "") + d.getMinutes()+':';
-        str+=(d.getSeconds() < 10 ? "0" : "") + d.getSeconds()+'.';
+        str+=(d.getHours() < 10 ? '0' : '') + d.getHours()+':';
+        str+=(d.getMinutes() < 10 ? '0' : '') + d.getMinutes()+':';
+        str+=(d.getSeconds() < 10 ? '0' : '') + d.getSeconds()+'.';
         str+=mm;
 
         str+=sprintf(' %2s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||process.env.NODE_APP_INSTANCE||process.pid, this.ns, level);
 
         if (this.redisClient) {
-            this.redisClient.publish({
+            let obj = {
                 pid:process.pid,
                 ns:this.ns,
                 l:level,
                 m:msg
-            });
+            };
+
+            if (this.options.attributes) {
+                obj = merge(obj, this.options.attributes);
+            }
+            this.redisClient.publish(obj);
         }
 
         str+=msg;
@@ -127,9 +135,9 @@ class EvilLogger {
     logme(msg, level) {
         if (!cluster.forkNumber) {
             if (this.file) {
-              this.file.write(this._prefix(level, msg)+'\n');
+                this.file.write(this._prefix(level, msg)+'\n');
             } else {
-              console.log(this._prefix(level, msg));
+                console.log(this._prefix(level, msg));
             }
             return;
         }
@@ -137,9 +145,9 @@ class EvilLogger {
         // avoid multiple messages on the same line
         setTimeout(() => {
             if (this.file) {
-              this.file.write(this._prefix(level, msg)+'\n');
+                this.file.write(this._prefix(level, msg)+'\n');
             } else {
-              console.log(this._prefix(level, msg));
+                console.log(this._prefix(level, msg));
             }
         }, cluster.forkNumber*4);
     }
