@@ -18,10 +18,10 @@
   "author": "eviltik",
   "license": "MIT",
   "dependencies": {
-    "colors": "1.2.1",
+    "colors": "1.3.3",
     "ioredis": "4.9.0",
     "merge": "1.2.1",
     "minimist": "1.2.0",
-    "sprintf-js": "1.1.1"
+    "sprintf-js": "1.1.2"
   }
 }
