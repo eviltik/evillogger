@@ -102,7 +102,7 @@ class EvilLogger {
                 pid:process.pid,
                 ns:this.ns,
                 l:level,
-                m:msg
+                m:msg.trim()
             };
 
             if (this.options.attributes) {
