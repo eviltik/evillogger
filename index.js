@@ -95,7 +95,7 @@ class EvilLogger {
         str+=(d.getSeconds() < 10 ? '0' : '') + d.getSeconds()+'.';
         str+=mm;
 
-        str+=sprintf(' %2s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||process.env.NODE_APP_INSTANCE||process.pid, this.ns, level);
+        str+=sprintf(' %5s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||process.env.NODE_APP_INSTANCE||process.pid, this.ns, level);
 
         if (this.redisClient) {
             let obj = {
