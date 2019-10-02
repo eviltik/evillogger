@@ -66,8 +66,8 @@ class EvilLogger {
                 this.success = () => {};
             }
         } catch(e) {
-
-        };
+            // console.log(e);
+        }
 
         if (argz.nocolor) {
             this.colorize = false;
@@ -135,7 +135,7 @@ class EvilLogger {
     }
 
     success() {
-        this._handleLastMessage(arguments, '  :)>');
+        this._handleLastMessage(arguments, 'success');
     }
 
     logme(msg, level) {
