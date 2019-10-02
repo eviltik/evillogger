@@ -97,7 +97,22 @@ class EvilLogger {
         str+=(d.getSeconds() < 10 ? '0' : '') + d.getSeconds()+'.';
         str+=mm;
 
-        str+=sprintf(' %5s | %-'+this.spaces+'s | %s: ', cluster.forkNumber||process.env.NODE_APP_INSTANCE||process.pid, this.ns, level);
+        let char = '|';
+        if (level === 'success') {
+            char = '>';
+        } else if (level === 'warn') {
+            char = '!';
+        } else if (level === 'error') {
+            char = '@';
+        }
+
+        str+=sprintf(
+            ' %5s | %-'+this.spaces+'s | %-8s %s ',
+            cluster.forkNumber || process.env.NODE_APP_INSTANCE || process.pid,
+            this.ns,
+            level,
+            char
+        );
 
         if (this.redisClient) {
             let obj = {
@@ -121,12 +136,10 @@ class EvilLogger {
     }
 
     info() {
-        arguments[0] = ' ' + arguments[0];
         this._handleLastMessage(arguments, 'info');
     }
 
     warn() {
-        arguments[0] = ' ' + arguments[0];
         this._handleLastMessage(arguments, 'warn');
     }
 
