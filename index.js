@@ -63,6 +63,7 @@ class EvilLogger {
                 this.debug = () => {};
                 this.info = () => {};
                 this.warn = () => {};
+                this.success = () => {};
             }
         } catch(e) {
 
@@ -76,7 +77,8 @@ class EvilLogger {
             info:'white',
             error:'red',
             warn:'yellow',
-            debug:'gray'
+            debug:'gray',
+            success:'green'
         };
 
     }
@@ -130,6 +132,10 @@ class EvilLogger {
 
     error() {
         this._handleLastMessage(arguments, 'error');
+    }
+
+    success() {
+        this._handleLastMessage(arguments, '  :)>');
     }
 
     logme(msg, level) {
