@@ -1,6 +1,6 @@
 {
   "name": "evillogger",
-  "version": "1.3.9",
+  "version": "1.4.0",
   "description": "Yet another nodejs logger",
   "main": "index.js",
   "scripts": {
@@ -18,10 +18,10 @@
   "author": "eviltik",
   "license": "MIT",
   "dependencies": {
-    "colors": "1.3.3",
-    "ioredis": "4.9.0",
+    "colors": "1.4.0",
+    "ioredis": "4.17.3",
     "merge": "1.2.1",
-    "minimist": "1.2.0",
+    "minimist": "1.2.5",
     "sprintf-js": "1.1.2"
   }
 }
