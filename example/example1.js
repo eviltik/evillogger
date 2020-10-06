@@ -1,6 +1,6 @@
-var log = require('../')({ns:'myProcessName',repl:true, spaces:50});
+const log = require('../')({ ns:'myProcessName', repl:true, spaces:50 });
 
-log.info('info !',{foo:'bar'});
+log.info('info !', { foo:'bar' });
 log.warn('warn !!');
 log.error(new Error('huhu'));
 
