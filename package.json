@@ -1,6 +1,6 @@
 {
   "name": "evillogger",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Yet another nodejs logger",
   "main": "index.js",
   "scripts": {
@@ -19,8 +19,8 @@
   "license": "MIT",
   "dependencies": {
     "colors": "1.4.0",
-    "ioredis": "4.17.3",
-    "merge": "1.2.1",
+    "ioredis": "4.19.4",
+    "merge": "2.1.0",
     "minimist": "1.2.5",
     "sprintf-js": "1.1.2"
   }
