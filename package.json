@@ -4,7 +4,7 @@
   "description": "Yet another nodejs logger",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node node_modules/tap/bin/run.js test/*.js"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,8 @@
     "merge": "2.1.0",
     "minimist": "1.2.5",
     "sprintf-js": "1.1.2"
+  },
+  "devDependencies": {
+    "tap": "14.11.0"
   }
 }
