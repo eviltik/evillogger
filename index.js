@@ -183,11 +183,11 @@ class EvilLogger {
         this.lastMessageRepeat++;
 
         if (this.lastMessageRepeat > this.allowedMessageCount[this.allowedMessageCount.length]) {
-            return this.logme(' last message repeated more than '+ this.allowedMessageCount[this.allowedMessageCount.length]+' times: '+this.allowedMessageCount[this.allowedMessageCount.length], level);
+            return this.logme('last message repeated more than '+ this.allowedMessageCount[this.allowedMessageCount.length]+' times: '+this.allowedMessageCount[this.allowedMessageCount.length], level);
         }
 
         if (this.allowedMessageCount.indexOf(this.lastMessageRepeat)>=0) {
-            return this.logme(' last message repeated '+this.lastMessageRepeat+' times: '+this.lastMessage, level);
+            return this.logme('last message repeated '+this.lastMessageRepeat+' times: '+this.lastMessage, level);
         }
 
         if (this.lastMessageRepeat < 5) {

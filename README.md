@@ -1,5 +1,8 @@
 # evillogger
+![Node.js CI](https://github.com/eviltik/evillogger/workflows/Node.js%20CI/badge.svg)
+[![npm version](https://badge.fury.io/js/evilscan.svg)](https://badge.fury.io/js/evillogger)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
+[![Dependency Status](https://david-dm.org/eviltik/evillogger.svg)](https://david-dm.org/eviltik/evillogger)
 
 nodejs logger for daemons. evilcluster compatible.
 
