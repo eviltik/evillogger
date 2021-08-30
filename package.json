@@ -19,12 +19,12 @@
   "license": "MIT",
   "dependencies": {
     "colors": "1.4.0",
-    "ioredis": "4.19.4",
-    "merge": "2.1.0",
+    "ioredis": "4.27.8",
+    "merge": "2.1.1",
     "minimist": "1.2.5",
     "sprintf-js": "1.1.2"
   },
   "devDependencies": {
-    "tap": "14.11.0"
+    "tap": "15.0.9"
   }
 }
